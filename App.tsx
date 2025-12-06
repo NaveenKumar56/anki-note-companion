@@ -77,20 +77,32 @@ export default function App() {
         return;
       }
 
-      // Handle new card loaded
-      if (card.noteId !== lastNoteId) {
-        setLastNoteId(card.noteId);
+      // Check for changes
+      const isNewNote = card.noteId !== lastNoteId;
+      // We also check if content strings changed (e.g. flipping card from Q -> Q+A)
+      const isContentChanged = !currentCard || 
+                               card.question !== currentCard.question || 
+                               card.answer !== currentCard.answer;
+
+      if (isNewNote || isContentChanged) {
         setCurrentCard(card);
-        setAnalysis(null); // Reset analysis for new card
-        if (settings.autoSync) {
-          setNoteContent(card.fields[settings.targetField]?.value || '');
+        
+        // If it's a completely new note, reset everything
+        if (isNewNote) {
+          setLastNoteId(card.noteId);
+          setAnalysis(null);
+          // Only sync note content from Anki if it's a new card
+          if (settings.autoSync) {
+            setNoteContent(card.fields[settings.targetField]?.value || '');
+          }
         }
+        // If it's just a card flip (isContentChanged but not isNewNote), we KEEP the current noteContent draft.
       }
     } catch (error: any) {
       setStatus(AppStatus.ERROR);
       setErrorDetails(error.message || 'Unknown error');
     }
-  }, [lastNoteId, settings, status]);
+  }, [lastNoteId, settings, status, currentCard]);
 
   useEffect(() => {
     ankiService.requestPermission().catch(() => {});

@@ -2,13 +2,13 @@
 
 A smart note-taking sidebar for Anki that uses Google Gemini to refine your study notes.
 
-## Manual Installation (Windows)
+## Part 1: Run the Web App (Required)
 
 1.  **Install Node.js**
     Download the LTS version from [nodejs.org](https://nodejs.org/).
 
 2.  **Install Dependencies**
-    Open a terminal (Command Prompt or PowerShell) in this folder and run:
+    Open a terminal in this folder and run:
     ```bash
     npm install
     ```
@@ -25,7 +25,19 @@ A smart note-taking sidebar for Anki that uses Google Gemini to refine your stud
     npm run dev
     ```
 
-## Anki Configuration
+## Part 2: Install Anki Dock (Required)
+
+The web app needs a "Container" to live inside Anki.
+
+1.  Open Anki.
+2.  Go to **Tools** -> **Add-ons** -> **View Files**.
+3.  Create a **New Folder** named `AnkiNoteCompanion`.
+4.  Inside that folder, create a text file named `__init__.py`.
+5.  **Copy the code from the `anki_addon_code.py` file in this project.**
+6.  **Paste it into the `__init__.py` file you just created.**
+7.  Restart Anki.
+
+## Part 3: Configure AnkiConnect
 
 1.  Install the **AnkiConnect** add-on (Code: `2055492159`).
 2.  Go to **Tools** -> **Add-ons** -> **AnkiConnect** -> **Config**.
@@ -42,5 +54,6 @@ A smart note-taking sidebar for Anki that uses Google Gemini to refine your stud
 
 ## Troubleshooting
 
-*   **"npm is not recognized"**: Restart your computer after installing Node.js.
-*   **App says "DISCONNECTED"**: Ensure Anki is open and the AnkiConnect config matches the port (default 8765) and CORS settings.
+*   **App says "DISCONNECTED"**: Ensure Anki is open and AnkiConnect config is correct.
+*   **Sidebar is blank**: Ensure you ran `npm run dev` and the terminal is still open.
+*   **SyntaxError**: If you see errors about `{` or `import`, update your Node.js to version 18+.
