@@ -1,0 +1,5 @@
+{
+  "name": "AnkiNote Companion",
+  "description": "A smart note-taking companion for Anki that syncs directly with your cards and uses Gemini to refine your study notes.",
+  "requestFramePermissions": []
+}
